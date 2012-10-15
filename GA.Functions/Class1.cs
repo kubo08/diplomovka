@@ -21,7 +21,7 @@ namespace GA.Functions
 		/// <returns>Newpop - new population</returns>
         public strukt crossov(strukt OldPop, int num, int sel)
         {
-
+            tralala
         }
 
         public double[,] genrPop(int popSize, double[,] Space)
