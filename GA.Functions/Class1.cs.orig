@@ -21,7 +21,11 @@ namespace GA.Functions
 		/// <returns>Newpop - new population</returns>
         public strukt crossov(strukt OldPop, int num, int sel)
         {
-            tralala
+<<<<<<< HEAD
+            ale toto asi radsej zmenim
+=======
+
+>>>>>>> parent of 00fa67a... prva zmena
         }
 
         public double[,] genrPop(int popSize, double[,] Space)
