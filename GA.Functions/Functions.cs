@@ -214,6 +214,47 @@ namespace GA.Functions
             return NewPop;
         }
 
-        fdsgdgdsgsgs
+        /// <summary>
+        /// The function mutates the population of strings with the intensity
+        ///	proportional to the parameter rate from interval <0;1>. Only a few genes  
+        ///	from a few strings are mutated in the population. The mutated values are
+        ///	selected from the bounded real-number space, which is defined by the two-row 
+        ///	matrix Space. The first row of the matrix represents the lower boundaries and the 
+        ///	second row represents the upper boundaries of corresponding genes in the strings.
+        /// </summary>
+        /// <param name="Oldpop">old population</param>
+        /// <param name="Amps">vector of absolute values of real-number boundaries</param>
+        /// <param name="Space">matrix of boundaries in the form: [vector of lower limits of genes;
+        ///                                                          vector of upper limits of genes];</param>
+        /// <param name="factor">mutation intensity, 0 =< rate =< 1</param>
+        /// <returns> Newpop - new mutated population</returns>
+        public matica mutx(matica OldPop, double factor, matica Space)
+        {
+            Random rand = new Random();
+
+            int lpop = OldPop.ColumnCount;
+            int lstring = OldPop.RowCount;
+
+            if (factor > 1)
+                factor = 1.0;
+            if (factor < 0)
+                factor = 0.0;
+
+            int n = Convert.ToInt32(Math.Ceiling(lpop * lstring * factor * rand.NextDouble()));     //nahodne generujem pocet mutovanych genov podla miery mutacie (factor)
+            matica NewPop = OldPop;
+
+            for (int i = 0; i < n; i++)
+            {
+                int r = Convert.ToInt32(Math.Ceiling(rand.NextDouble() * lpop));
+                int s = Convert.ToInt32(Math.Ceiling(rand.NextDouble() * lstring));
+
+                double d = Space[2, s] - Space[1, s];
+                NewPop[r, s] = rand.NextDouble() * d + Space[1, s];     //dany gen nahradim novym z def. intervalu
+                if (NewPop[r, s] < Space[1, s])
+                    NewPop[r, s] = Space[1, s];
+                if (NewPop[r, s] > Space[2, s])
+                    NewPop[r, s] = Space[2, s];
+            }
+        }
     }
 }
