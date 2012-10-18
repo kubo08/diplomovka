@@ -166,5 +166,52 @@ namespace GA.Functions
             return NewPop;
         }
 
+        /// <summary>
+        /// The function mutates the population of strings with the intensity
+        ///	proportional to the parameter rate from interval <0;1>. Only a few genes  
+        ///	from a few strings are mutated in the population. The mutations are realized
+        ///	by addition or substraction of random real-numbers to the mutated genes. The 
+        ///	absolute values of the added constants are limited by the vector Amp. 
+        ///	Next the mutated strings are limited using boundaries defined in 
+        ///	a two-row matrix Space. The first row of the matrix represents the lower 
+        ///	boundaries and the second row represents the upper boundaries of corresponding 
+        ///	genes.
+        /// </summary>
+        /// <param name="Oldpop">old population</param>
+        /// <param name="Amps">vector of absolute values of real-number boundaries</param>
+        /// <param name="Space">matrix of gene boundaries in the form: 
+        /// 	                [real-number vector of lower limits of genes
+        ///                     real-number vector of upper limits of genes];</param>
+        /// <param name="factor">mutation intensity, 0 =< rate =< 1</param>
+        /// <returns> Newpop - new, mutated population</returns>
+
+        public matica muta(matica OldPop, double factor, double[] Amps, matica Space)
+        {
+            Random rand = new Random();
+            int lpop = OldPop.ColumnCount;
+            int lstring = OldPop.RowCount;
+
+            if (factor > 1)
+                factor = 1.0;
+            if (factor < 0)
+                factor = 0.0;
+
+            int n = Convert.ToInt32(Math.Ceiling(lpop * lstring * factor * rand.NextDouble())); //nahodne generujem pocet mutovanych genov podla miery mutacie (factor)
+
+            matica NewPop = OldPop;
+
+            for (int i = 0; i < n; i++) //cyklus na pocet mutacii
+            {
+                int r = Convert.ToInt32(Math.Ceiling(rand.NextDouble() * lpop));
+                int s = Convert.ToInt32(Math.Ceiling(rand.NextDouble() * lstring));
+                NewPop[r, s] = OldPop[r, s] + (2 * rand.NextDouble() - 1) * Amps[s];    //k danemu genu pripocitam nahodne cislo z def. intervalu 
+                if (NewPop[r, s] < Space[1, s])
+                    NewPop[r, s] = Space[1, s];
+                if (NewPop[r, s] > Space[2, s])
+                    NewPop[r, s] = Space[2, s];
+            }
+
+            return NewPop;
+        }
     }
 }
