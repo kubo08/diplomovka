@@ -260,7 +260,6 @@ namespace GA.Functions
         }
 
         /// <summary>
-        /// Description:
         ///	The function copies from the old population into the new population
         ///	required a number of strings according to their fitness. The number of the
         ///	selected strings depends on the vector Nums as follows:
@@ -274,7 +273,7 @@ namespace GA.Functions
         ///                                          number of copies of the i-th best string, ...]</param>
         /// <returns> Newpop - new selected population
         ///           Newfit - fitness vector of Newpop</returns>
-        public matica selBest(matica OldPop, double[] FvPop, int[] Nums)
+        public PopFit selBest(matica OldPop, double[] FvPop, int[] Nums)
         {
             matica Newpop0 = new DenseMatrix(OldPop.RowCount, OldPop.ColumnCount);
             matica NewPop = new DenseMatrix(OldPop.RowCount, OldPop.ColumnCount);
@@ -307,8 +306,75 @@ namespace GA.Functions
             }
             PopFit result = new PopFit { Pop = NewPop, Fit = Fit };
             
+            return result;
+        }
 
-            return NewPop;
+        /// <summary>
+        /// The function selects randomly from the old population a required number
+        ///	of strings. 
+        /// </summary>
+        /// <param name="Oldpop">old population</param>
+        /// <param name="Oldfit">fitness vector of Oldpop</param>
+        /// <param name="Num">number of selected strings</param>
+        /// <returns> Newpop - new selected population
+        ///           Newfit - fitness vector of Newpop</returns>
+        public PopFit selRand(matica OldPop, double[] OldFit, int num)
+        {
+            Random rand = new Random();
+            int lpop = OldPop.ColumnCount;
+            int lstring = OldPop.RowCount;
+            int j;
+            matica NewPop = new DenseMatrix(OldPop.RowCount, OldPop.ColumnCount);
+            double[] NewFit = new double[OldFit.Length];
+
+            for (int i = 0; i < num; i++)
+            {
+                j = Convert.ToInt32(Math.Ceiling(lpop * rand.NextDouble()));
+                NewPop.SetRow(i, OldPop.Row(j));
+                NewFit[i] = OldFit[j];
+            }
+            PopFit result = new PopFit { Pop = NewPop, Fit = NewFit };
+
+            return result;
+        }
+
+        /// <summary>
+        /// The function selects using tournament selection from the old population 
+        ///       a required number of strings.
+        /// </summary>
+        /// <param name="Oldpop">old population</param>
+        /// <param name="Oldfit">fitness vector of Oldpop</param>
+        /// <param name="Num">number of selected strings</param>
+        /// <returns> Newpop - new selected population
+        ///           Newfit - fitness vector of Newpop</returns>
+        public PopFit selTourn(matica OldPop, double[] OldFit, int num)
+        {
+            Random rand=new Random();
+            int lpop = OldPop.ColumnCount;
+            int lstring = OldPop.RowCount;
+            int j,k;
+            matica NewPop = new DenseMatrix(OldPop.RowCount, OldPop.ColumnCount);
+            double[] NewFit = new double[OldFit.Length];
+
+            for (int i = 0; i < num; i++)
+            {
+                j = Convert.ToInt32(Math.Ceiling(lpop * rand.NextDouble()));
+                k = Convert.ToInt32(Math.Ceiling(lpop * rand.NextDouble()));
+
+                if (OldFit[j] <= OldFit[k])
+                {
+                    NewPop.SetRow(i, OldPop.Row(j));
+                    NewFit[i] = OldFit[j];
+                }
+                else
+                {
+                    NewPop.SetRow(i, OldPop.Row(k));
+                    NewFit[i] = OldFit[k];
+                }
+            }
+            PopFit result = new PopFit { Pop = NewPop, Fit = NewFit };
+
+            return result;
         }
     }
 
