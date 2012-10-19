@@ -255,6 +255,66 @@ namespace GA.Functions
                 if (NewPop[r, s] > Space[2, s])
                     NewPop[r, s] = Space[2, s];
             }
+
+            return NewPop;
         }
+
+        /// <summary>
+        /// Description:
+        ///	The function copies from the old population into the new population
+        ///	required a number of strings according to their fitness. The number of the
+        ///	selected strings depends on the vector Nums as follows:
+        ///	Nums=[number of copies of the best string, ... ,
+        ///             number of copies of the i-th best string, ...]
+        ///	The best string is the string with the lowest value of its objective function.
+        /// </summary>
+        /// <param name="Oldpop">old population</param>
+        /// <param name="FvPop">fitness vector of Oldpop</param>
+        /// <param name="Nums">vector in the form: Nums=[number of copies of the best string, ... ,
+        ///                                          number of copies of the i-th best string, ...]</param>
+        /// <returns> Newpop - new selected population
+        ///           Newfit - fitness vector of Newpop</returns>
+        public matica selBest(matica OldPop, double[] FvPop, int[] Nums)
+        {
+            matica Newpop0 = new DenseMatrix(OldPop.RowCount, OldPop.ColumnCount);
+            matica NewPop = new DenseMatrix(OldPop.RowCount, OldPop.ColumnCount);
+            double[] NewFit0 = new double[FvPop.Length];
+            double[] NewFit = new double[FvPop.Length];
+
+            int N = Nums.Length;
+            //[Fit, fix] = sort(FvPop);
+            var sorted = FvPop
+                .Select((x, i) => new KeyValuePair<double, int>(x, i))
+                .OrderBy(x => x.Key)
+                .ToList();
+            double[] Fit = sorted.Select(x => x.Key).ToArray();
+            int[] nix = sorted.Select(x => x.Value).ToArray();
+
+            for (int i = 0; i < N; i++)
+            {
+                Newpop0.SetRow(i, OldPop.Row(nix[i]));        //vytvorenie populacie z N najlepsimi retazcami, z ktorych sa budu robit kopie 
+                NewFit0[N] = Fit[N];
+            }
+
+            int r = 0;
+            for (int i = 0; i < N; i++)
+            {
+                for (int j = 0; j < Nums[i]; j++)
+                {
+                    NewPop.SetRow(r, Newpop0.Row(i));
+                    NewFit[r] = NewFit0[i];
+                }
+            }
+            PopFit result = new PopFit { Pop = NewPop, Fit = Fit };
+            
+
+            return NewPop;
+        }
+    }
+
+    public class PopFit
+    {
+        public matica Pop { get; set; }
+        public double[] Fit { get; set; }
     }
 }
