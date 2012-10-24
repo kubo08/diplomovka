@@ -7,7 +7,7 @@ using Alg = MathNet.Numerics.LinearAlgebra;
 using matica = MathNet.Numerics.LinearAlgebra.Double.Matrix;
 using MathNet.Numerics.LinearAlgebra.Double;
 
-namespace GA.Functions
+namespace GA
 {
     public class Functions
     {
@@ -29,8 +29,8 @@ namespace GA.Functions
             Random rand = new Random();
             
             matica NewPop = OldPop;
-            int lstring = OldPop.RowCount;
-            int lpop=OldPop.ColumnCount;
+            int lstring = OldPop.ColumnCount;
+            int lpop = OldPop.RowCount;
             int num;
             int[] flag = new int[lpop];    //vytvorim pole flagov ci bol retazec z populacie vybrany  
             num = Convert.ToInt32(Math.Truncate((double)lpop / 2.0));
@@ -43,10 +43,10 @@ namespace GA.Functions
                         i += 1;
                     }
                     flag[i] = 1;
-                    j =  Convert.ToInt32(Math.Ceiling((double)lpop * rand.NextDouble())); //nahodne najde retazec s flagom 0, co este nebol vybrany (index j)
+                    j =  Convert.ToInt32(Math.Ceiling((lpop-1) * rand.NextDouble())); //nahodne najde retazec s flagom 0, co este nebol vybrany (index j)
                     while (flag[j] != 0)
                     {
-                        j = Convert.ToInt32(Math.Ceiling((double)lpop * rand.NextDouble()));
+                        j = Convert.ToInt32(Math.Ceiling((lpop-1) * rand.NextDouble()));
                     }
                     flag[j] = 2;
                 }
@@ -57,14 +57,14 @@ namespace GA.Functions
                 }
                 if (pts > 4)
                     pts = 4;
-                int[] v=new int[pts];
-                double n = lstring * (1 - (pts - 1) * 0.15);
-                int p = Convert.ToInt32(Math.Ceiling(rand.NextDouble() * n));
+                List<int> v=new List<int>();
+                double n = lstring * (1 - (pts - 1) * 0.15);        //max. usek
+                int p = Convert.ToInt32(Math.Ceiling(rand.NextDouble() * n));   //1. usek
                 if (p == lstring)
                 {
                     p = lstring - 1;
                 }
-                v[0] = p;
+                v.Add(p);
 
                 for (int k = 0; k < pts - 1; k++)
                 {
@@ -74,11 +74,11 @@ namespace GA.Functions
                     p = p + h;
                     if (p >= lstring)
                         break;
-                    v[k + 1] = p;            //zapis bodu krizenia do pola
+                    v.Add(p);            //zapis bodu krizenia do pola
                 }
 
                 //krizenie
-                NewPop = skriz(OldPop, NewPop, v, lstring, i, j);
+                NewPop = skriz(OldPop, NewPop, v.ToArray(), lstring, i, j);
             }
 
             return NewPop;
@@ -97,14 +97,14 @@ namespace GA.Functions
             {
                 if (a % 2 == 0)
                 {
-                    listPrvkov1.Add(OldPop.Row(i, v[a], v[a + 1]).ToArray());
-                    listPrvkov2.Add(OldPop.Row(j, v[a], v[a + 1]).ToArray());
+                    listPrvkov1.Add(OldPop.Row(i, newV[a], newV[a + 1] - newV[a]).ToArray());
+                    listPrvkov2.Add(OldPop.Row(j, newV[a], newV[a + 1] - newV[a]).ToArray());
                 }
                 else
                 {
-                    listPrvkov1.Add(OldPop.Row(j, v[a], v[a + 1]).ToArray());
-                    listPrvkov2.Add(OldPop.Row(i, v[a], v[a + 1]).ToArray());
-                }
+                    listPrvkov1.Add(OldPop.Row(j, newV[a], newV[a + 1] - newV[a]).ToArray());
+                    listPrvkov2.Add(OldPop.Row(i, newV[a], newV[a + 1] - newV[a]).ToArray());
+               } 
             }
             double[] row = spoj(listPrvkov1);
             NewPop.SetRow(i, row);
@@ -145,21 +145,21 @@ namespace GA.Functions
         public matica genrPop(int popSize, matica Space)
         {            
             Random random = new Random();
-            int lstring = Space.RowCount;
+            int lstring = Space.ColumnCount;
             matica NewPop = new DenseMatrix(popSize, lstring);
 
             for (int i = 0; i < popSize; i++)
             {
                 for (int j = 0; j < lstring; j++)
                 {
-                    double d = Space[2, j] - Space[1, j];
-                    NewPop[i, j] = random.NextDouble() * d + Space[1, j];
+                    double d = Space[1, j] - Space[0, j];
+                    NewPop[i, j] = random.NextDouble() * d + Space[0, j];
 
                     //podmienky na ohranicenie hodnoty genu
-                    if (NewPop[i, j] < Space[1, j])
+                    if (NewPop[i, j] < Space[0, j])
+                        NewPop[i, j] = Space[0, j];
+                    if (NewPop[i, j] > Space[1, j])
                         NewPop[i, j] = Space[1, j];
-                    if (NewPop[i, j] > Space[2, j])
-                        NewPop[i, j] = Space[2, j];
                 }
             }
 
@@ -185,11 +185,11 @@ namespace GA.Functions
         /// <param name="factor">mutation intensity, 0 =< rate =< 1</param>
         /// <returns> Newpop - new, mutated population</returns>
 
-        public matica muta(matica OldPop, double factor, double[] Amps, matica Space)
+        public matica muta(matica OldPop, double factor, matica Amps, matica Space)
         {
             Random rand = new Random();
-            int lpop = OldPop.ColumnCount;
-            int lstring = OldPop.RowCount;
+            int lstring = OldPop.ColumnCount;
+            int lpop = OldPop.RowCount;
 
             if (factor > 1)
                 factor = 1.0;
@@ -204,7 +204,7 @@ namespace GA.Functions
             {
                 int r = Convert.ToInt32(Math.Ceiling(rand.NextDouble() * lpop));
                 int s = Convert.ToInt32(Math.Ceiling(rand.NextDouble() * lstring));
-                NewPop[r, s] = OldPop[r, s] + (2 * rand.NextDouble() - 1) * Amps[s];    //k danemu genu pripocitam nahodne cislo z def. intervalu 
+                NewPop[r, s] = OldPop[r, s] + (2 * rand.NextDouble() - 1) * Amps[0, s];    //k danemu genu pripocitam nahodne cislo z def. intervalu 
                 if (NewPop[r, s] < Space[1, s])
                     NewPop[r, s] = Space[1, s];
                 if (NewPop[r, s] > Space[2, s])
@@ -232,8 +232,8 @@ namespace GA.Functions
         {
             Random rand = new Random();
 
-            int lpop = OldPop.ColumnCount;
-            int lstring = OldPop.RowCount;
+            int lstring = OldPop.ColumnCount;
+            int lpop = OldPop.RowCount;
 
             if (factor > 1)
                 factor = 1.0;
@@ -275,10 +275,16 @@ namespace GA.Functions
         ///           Newfit - fitness vector of Newpop</returns>
         public PopFit selBest(matica OldPop, double[] FvPop, int[] Nums)
         {
-            matica Newpop0 = new DenseMatrix(OldPop.RowCount, OldPop.ColumnCount);
-            matica NewPop = new DenseMatrix(OldPop.RowCount, OldPop.ColumnCount);
-            double[] NewFit0 = new double[FvPop.Length];
-            double[] NewFit = new double[FvPop.Length];
+            int count = 0;
+            for (int i = 0; i < Nums.Length; i++)
+            {
+                count += Nums[i];
+            }
+
+            matica Newpop0 = new DenseMatrix(Nums.Length, OldPop.ColumnCount);            
+            matica NewPop = new DenseMatrix(count, OldPop.ColumnCount);
+            double[] NewFit0 = new double[Nums.Length];
+            double[] NewFit = new double[count];
 
             int N = Nums.Length;
             //[Fit, fix] = sort(FvPop);
@@ -292,7 +298,7 @@ namespace GA.Functions
             for (int i = 0; i < N; i++)
             {
                 Newpop0.SetRow(i, OldPop.Row(nix[i]));        //vytvorenie populacie z N najlepsimi retazcami, z ktorych sa budu robit kopie 
-                NewFit0[N] = Fit[N];
+                NewFit0[i] = Fit[i];
             }
 
             int r = 0;
@@ -302,9 +308,10 @@ namespace GA.Functions
                 {
                     NewPop.SetRow(r, Newpop0.Row(i));
                     NewFit[r] = NewFit0[i];
+                    r++;
                 }
             }
-            PopFit result = new PopFit { Pop = NewPop, Fit = Fit };
+            PopFit result = new PopFit { Pop = NewPop, Fit = NewFit };
             
             return result;
         }
@@ -321,15 +328,15 @@ namespace GA.Functions
         public PopFit selRand(matica OldPop, double[] OldFit, int num)
         {
             Random rand = new Random();
-            int lpop = OldPop.ColumnCount;
-            int lstring = OldPop.RowCount;
+            int lstring = OldPop.ColumnCount;
+            int lpop = OldPop.RowCount;
             int j;
-            matica NewPop = new DenseMatrix(OldPop.RowCount, OldPop.ColumnCount);
-            double[] NewFit = new double[OldFit.Length];
+            matica NewPop = new DenseMatrix(num, OldPop.ColumnCount);
+            double[] NewFit = new double[num];
 
             for (int i = 0; i < num; i++)
             {
-                j = Convert.ToInt32(Math.Ceiling(lpop * rand.NextDouble()));
+                j = Convert.ToInt32(Math.Ceiling((lpop-1) * rand.NextDouble()));
                 NewPop.SetRow(i, OldPop.Row(j));
                 NewFit[i] = OldFit[j];
             }
@@ -350,16 +357,16 @@ namespace GA.Functions
         public PopFit selTourn(matica OldPop, double[] OldFit, int num)
         {
             Random rand=new Random();
-            int lpop = OldPop.ColumnCount;
-            int lstring = OldPop.RowCount;
+            int lstring = OldPop.ColumnCount;
+            int lpop = OldPop.RowCount;
             int j,k;
-            matica NewPop = new DenseMatrix(OldPop.RowCount, OldPop.ColumnCount);
-            double[] NewFit = new double[OldFit.Length];
+            matica NewPop = new DenseMatrix(num, OldPop.ColumnCount);
+            double[] NewFit = new double[num];
 
             for (int i = 0; i < num; i++)
             {
-                j = Convert.ToInt32(Math.Ceiling(lpop * rand.NextDouble()));
-                k = Convert.ToInt32(Math.Ceiling(lpop * rand.NextDouble()));
+                j = Convert.ToInt32(Math.Ceiling((lpop-1) * rand.NextDouble()));
+                k = Convert.ToInt32(Math.Ceiling((lpop-1) * rand.NextDouble()));
 
                 if (OldFit[j] <= OldFit[k])
                 {

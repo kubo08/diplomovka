@@ -1,0 +1,6 @@
+C:\Users\jakub\Documents\!skola\!!FEI ING\diplomova praca\GA.Functions\GA.Functions\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\jakub\Documents\!skola\!!FEI ING\diplomova praca\GA.Functions\GA.Functions\bin\Debug\GA.Functions.dll
+C:\Users\jakub\Documents\!skola\!!FEI ING\diplomova praca\GA.Functions\GA.Functions\bin\Debug\GA.Functions.pdb
+C:\Users\jakub\Documents\!skola\!!FEI ING\diplomova praca\GA.Functions\GA.Functions\bin\Debug\MathNet.Numerics.dll
+C:\Users\jakub\Documents\!skola\!!FEI ING\diplomova praca\GA.Functions\GA.Functions\obj\Debug\GA.Functions.dll
+C:\Users\jakub\Documents\!skola\!!FEI ING\diplomova praca\GA.Functions\GA.Functions\obj\Debug\GA.Functions.pdb

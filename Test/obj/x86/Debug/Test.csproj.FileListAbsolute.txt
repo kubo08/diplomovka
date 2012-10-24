@@ -1,0 +1,14 @@
+C:\Users\jakub\Documents\!skola\!!FEI ING\diplomova praca\GA.Functions\Test\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\jakub\Documents\!skola\!!FEI ING\diplomova praca\GA.Functions\Test\obj\x86\Debug\Test.Properties.Resources.resources
+C:\Users\jakub\Documents\!skola\!!FEI ING\diplomova praca\GA.Functions\Test\obj\x86\Debug\GenerateResource.read.1.tlog
+C:\Users\jakub\Documents\!skola\!!FEI ING\diplomova praca\GA.Functions\Test\obj\x86\Debug\GenerateResource.write.1.tlog
+C:\Users\jakub\Documents\!skola\!!FEI ING\diplomova praca\GA.Functions\Test\bin\Debug\Test.exe
+C:\Users\jakub\Documents\!skola\!!FEI ING\diplomova praca\GA.Functions\Test\bin\Debug\Test.pdb
+C:\Users\jakub\Documents\!skola\!!FEI ING\diplomova praca\GA.Functions\Test\bin\Debug\GA.Functions.dll
+C:\Users\jakub\Documents\!skola\!!FEI ING\diplomova praca\GA.Functions\Test\bin\Debug\MathNet.Numerics.dll
+C:\Users\jakub\Documents\!skola\!!FEI ING\diplomova praca\GA.Functions\Test\bin\Debug\GA.Functions.pdb
+C:\Users\jakub\Documents\!skola\!!FEI ING\diplomova praca\GA.Functions\Test\bin\Debug\MathNet.Numerics.pdb
+C:\Users\jakub\Documents\!skola\!!FEI ING\diplomova praca\GA.Functions\Test\bin\Debug\MathNet.Numerics.xml
+C:\Users\jakub\Documents\!skola\!!FEI ING\diplomova praca\GA.Functions\Test\obj\x86\Debug\Test.exe
+C:\Users\jakub\Documents\!skola\!!FEI ING\diplomova praca\GA.Functions\Test\obj\x86\Debug\Test.pdb
+C:\Users\jakub\Documents\!skola\!!FEI ING\diplomova praca\GA.Functions\Test\obj\x86\Debug\Test.Form1.resources
