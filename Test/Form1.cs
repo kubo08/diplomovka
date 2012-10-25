@@ -54,9 +54,9 @@ namespace Test
                 Work = Ga.mutx(Work, 0.25, SpaceAll);
                 Work = Ga.muta(Work, 0.2, SpaceMut, SpaceAll);
                 Pop.SetSubMatrix(0, Best.Pop.RowCount, 0, Pop.ColumnCount, Best.Pop);
-                Pop.SetSubMatrix(Best.Pop.RowCount + 1, Work.RowCount, 0, Pop.ColumnCount, Work);
-                Pop.SetSubMatrix(Best.Pop.RowCount + Work.RowCount + 1, Old1.Pop.RowCount, 0, Pop.ColumnCount, Old1.Pop);
-                Pop.SetSubMatrix(Best.Pop.RowCount + Work.RowCount + Old1.Pop.RowCount + 1, Old2.RowCount, 0, Pop.ColumnCount, Old2);
+                Pop.SetSubMatrix(Best.Pop.RowCount, Work.RowCount, 0, Pop.ColumnCount, Work);
+                Pop.SetSubMatrix(Best.Pop.RowCount + Work.RowCount, Old1.Pop.RowCount, 0, Pop.ColumnCount, Old1.Pop);
+                Pop.SetSubMatrix(Best.Pop.RowCount + Work.RowCount + Old1.Pop.RowCount, Old2.RowCount, 0, Pop.ColumnCount, Old2);
             }
 
             FitPop = schwefel.schwefelFunc(Pop);

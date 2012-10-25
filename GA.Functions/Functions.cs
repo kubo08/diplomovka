@@ -195,20 +195,20 @@ namespace GA
                 factor = 1.0;
             if (factor < 0)
                 factor = 0.0;
-
+            //TODO: check every ceiling (-1)
             int n = Convert.ToInt32(Math.Ceiling(lpop * lstring * factor * rand.NextDouble())); //nahodne generujem pocet mutovanych genov podla miery mutacie (factor)
 
             matica NewPop = OldPop;
 
             for (int i = 0; i < n; i++) //cyklus na pocet mutacii
             {
-                int r = Convert.ToInt32(Math.Ceiling(rand.NextDouble() * lpop));
-                int s = Convert.ToInt32(Math.Ceiling(rand.NextDouble() * lstring));
+                int r = Convert.ToInt32(Math.Ceiling(rand.NextDouble() * (lpop-1)));
+                int s = Convert.ToInt32(Math.Ceiling(rand.NextDouble() * (lstring-1)));
                 NewPop[r, s] = OldPop[r, s] + (2 * rand.NextDouble() - 1) * Amps[0, s];    //k danemu genu pripocitam nahodne cislo z def. intervalu 
-                if (NewPop[r, s] < Space[1, s])
+                if (NewPop[r, s] < Space[0, s])
+                    NewPop[r, s] = Space[0, s];
+                if (NewPop[r, s] > Space[1, s])
                     NewPop[r, s] = Space[1, s];
-                if (NewPop[r, s] > Space[2, s])
-                    NewPop[r, s] = Space[2, s];
             }
 
             return NewPop;
@@ -245,15 +245,15 @@ namespace GA
 
             for (int i = 0; i < n; i++)
             {
-                int r = Convert.ToInt32(Math.Ceiling(rand.NextDouble() * lpop));
-                int s = Convert.ToInt32(Math.Ceiling(rand.NextDouble() * lstring));
+                int r = Convert.ToInt32(Math.Ceiling(rand.NextDouble() * (lpop-1)));
+                int s = Convert.ToInt32(Math.Ceiling(rand.NextDouble() * (lstring-1)));
 
-                double d = Space[2, s] - Space[1, s];
-                NewPop[r, s] = rand.NextDouble() * d + Space[1, s];     //dany gen nahradim novym z def. intervalu
-                if (NewPop[r, s] < Space[1, s])
+                double d = Space[1, s] - Space[0, s];
+                NewPop[r, s] = rand.NextDouble() * d + Space[0, s];     //dany gen nahradim novym z def. intervalu
+                if (NewPop[r, s] < Space[0, s])
+                    NewPop[r, s] = Space[0, s];
+                if (NewPop[r, s] > Space[1, s])
                     NewPop[r, s] = Space[1, s];
-                if (NewPop[r, s] > Space[2, s])
-                    NewPop[r, s] = Space[2, s];
             }
 
             return NewPop;
