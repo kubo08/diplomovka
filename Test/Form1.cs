@@ -26,6 +26,14 @@ namespace Test
             int numgen = Convert.ToInt32(txtNumgen.Text);
             int lpop= Convert.ToInt32(txtLpop.Text);
 
+            int[] selbest = txtSelbest.Text.Split(',').ToList().ConvertAll<int>(s => Convert.ToInt32(s)).ToArray();
+
+            if ((selbest.Sum() + Convert.ToInt32(txtSelrand.Text) + Convert.ToInt32(txtNewPop.Text) + Convert.ToInt32(txtSeltourn.Text)) != Convert.ToInt32(txtLpop.Text))
+            {
+                txtError.Text = "selbest + selrand + nova populacia + seltourn sa musi rovnat velkosti populacie";
+                return;
+            }
+
             Matrix SpaceAll = new DenseMatrix(2, 10);
             Matrix SpaceMut = new DenseMatrix(2, 10);
             for (int i = 0; i < 2; i++)
@@ -46,8 +54,8 @@ namespace Test
             for (int gen = 0; gen < numgen; gen++)
             {
                 FitPop = schwefel.schwefelFunc(Pop);
-                FitTrend.Add(FitPop.Min());                
-                Best = Ga.selBest(Pop, FitPop, new int[2] { 1, 1 });
+                FitTrend.Add(FitPop.Min());
+                Best = Ga.selBest(Pop, FitPop, selbest);
                 Old1 = Ga.selRand(Pop, FitPop, 7);
                 Old2 = Ga.genrPop(7, SpaceAll);
                 Work=Ga.selTourn(Pop, FitPop, 14).Pop;
