@@ -11,6 +11,7 @@ namespace GA
 {
     public class Functions
     {
+        Random rand = new Random();
         /// <summary>
 		/// The function creates a new population of strings, which rises after
         ///	1- to 4-point crossover operation of all (couples of) strings of the old
@@ -26,7 +27,6 @@ namespace GA
         public matica crossov(matica OldPop, int pts, int sel)
         {
             int i = 0, j=0;
-            Random rand = new Random();
             
             matica NewPop = OldPop;
             int lstring = OldPop.ColumnCount;
@@ -143,8 +143,7 @@ namespace GA
         ///	   gene values.</param>
         /// <returns> Newpop - random generated population</returns>
         public matica genrPop(int popSize, matica Space)
-        {            
-            Random random = new Random();
+        {
             int lstring = Space.ColumnCount;
             matica NewPop = new DenseMatrix(popSize, lstring);
 
@@ -153,7 +152,7 @@ namespace GA
                 for (int j = 0; j < lstring; j++)
                 {
                     double d = Space[1, j] - Space[0, j];
-                    NewPop[i, j] = random.NextDouble() * d + Space[0, j];
+                    NewPop[i, j] = rand.NextDouble() * d + Space[0, j];
 
                     //podmienky na ohranicenie hodnoty genu
                     if (NewPop[i, j] < Space[0, j])
@@ -187,7 +186,6 @@ namespace GA
 
         public matica muta(matica OldPop, double factor, matica Amps, matica Space)
         {
-            Random rand = new Random();
             int lstring = OldPop.ColumnCount;
             int lpop = OldPop.RowCount;
 
@@ -195,7 +193,7 @@ namespace GA
                 factor = 1.0;
             if (factor < 0)
                 factor = 0.0;
-            //TODO: check every ceiling (-1)
+            
             int n = Convert.ToInt32(Math.Ceiling(lpop * lstring * factor * rand.NextDouble())); //nahodne generujem pocet mutovanych genov podla miery mutacie (factor)
 
             matica NewPop = OldPop;
@@ -230,8 +228,6 @@ namespace GA
         /// <returns> Newpop - new mutated population</returns>
         public matica mutx(matica OldPop, double factor, matica Space)
         {
-            Random rand = new Random();
-
             int lstring = OldPop.ColumnCount;
             int lpop = OldPop.RowCount;
 
@@ -327,7 +323,6 @@ namespace GA
         ///           Newfit - fitness vector of Newpop</returns>
         public PopFit selRand(matica OldPop, double[] OldFit, int num)
         {
-            Random rand = new Random();
             int lstring = OldPop.ColumnCount;
             int lpop = OldPop.RowCount;
             int j;
@@ -356,7 +351,6 @@ namespace GA
         ///           Newfit - fitness vector of Newpop</returns>
         public PopFit selTourn(matica OldPop, double[] OldFit, int num)
         {
-            Random rand=new Random();
             int lstring = OldPop.ColumnCount;
             int lpop = OldPop.RowCount;
             int j,k;

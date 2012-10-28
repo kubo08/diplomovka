@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="libraries\MathNet.Numerics.dll" />
+    <Content Include="libraries\ZedGraph.dll" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
