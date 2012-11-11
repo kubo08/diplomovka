@@ -27,3 +27,5 @@ C:\Users\jakub\Documents\!skola\!!FEI ING\diplomova praca\GA.Functions\Test\bin\
 C:\Users\jakub\Documents\!skola\!!FEI ING\diplomova praca\GA.Functions\Test\bin\Debug\tr\ZedGraph.resources.dll
 C:\Users\jakub\Documents\!skola\!!FEI ING\diplomova praca\GA.Functions\Test\bin\Debug\zh-cn\ZedGraph.resources.dll
 C:\Users\jakub\Documents\!skola\!!FEI ING\diplomova praca\GA.Functions\Test\bin\Debug\zh-tw\ZedGraph.resources.dll
+E:\!skola\!!FEI ING\diplomova praca\GA.Functions\Test\obj\x86\Debug\Test.exe
+E:\!skola\!!FEI ING\diplomova praca\GA.Functions\Test\obj\x86\Debug\Test.pdb
