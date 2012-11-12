@@ -58,7 +58,15 @@ namespace Test
                 Best = Ga.selBest(Pop, FitPop, selbest);
                 Old1 = Ga.selRand(Pop, FitPop, 7);
                 Old2 = Ga.genrPop(7, SpaceAll);
-                Work=Ga.selTourn(Pop, FitPop, 14).Pop;
+                Work = Ga.selwRul(Pop, FitPop, 14).Pop;
+                //Work = Ga.selSort(Pop, FitPop, 14).Pop;
+                //Work = Ga.shake(Work, 0.3);
+                //Work = Ga.mutm(Work, 0.2, SpaceMut, SpaceAll);
+                //Work = Ga.around(Work, 0, 1.25, SpaceAll);
+                //Work = Ga.swapgen(Work, 0.25);
+                //Work = Ga.swapPart(Work, 0.35);
+                //Work = Ga.crosord(Work, 0);
+                Work = Ga.selTourn(Pop, FitPop, 14).Pop;
                 Work = Ga.crossov(Work, 3, 0);
                 Work = Ga.mutx(Work, 0.25, SpaceAll);
                 Work = Ga.muta(Work, 0.2, SpaceMut, SpaceAll);

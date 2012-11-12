@@ -29,3 +29,16 @@ C:\Users\jakub\Documents\!skola\!!FEI ING\diplomova praca\GA.Functions\Test\bin\
 C:\Users\jakub\Documents\!skola\!!FEI ING\diplomova praca\GA.Functions\Test\bin\Debug\zh-tw\ZedGraph.resources.dll
 E:\!skola\!!FEI ING\diplomova praca\GA.Functions\Test\obj\x86\Debug\Test.exe
 E:\!skola\!!FEI ING\diplomova praca\GA.Functions\Test\obj\x86\Debug\Test.pdb
+E:\!skola\!!FEI ING\diplomova praca\GA.Functions\Test\bin\Debug\Test.exe
+E:\!skola\!!FEI ING\diplomova praca\GA.Functions\Test\bin\Debug\Test.pdb
+E:\!skola\!!FEI ING\diplomova praca\GA.Functions\Test\bin\Debug\GA.Functions.dll
+E:\!skola\!!FEI ING\diplomova praca\GA.Functions\Test\bin\Debug\MathNet.Numerics.dll
+E:\!skola\!!FEI ING\diplomova praca\GA.Functions\Test\bin\Debug\ZedGraph.dll
+E:\!skola\!!FEI ING\diplomova praca\GA.Functions\Test\bin\Debug\GA.Functions.pdb
+E:\!skola\!!FEI ING\diplomova praca\GA.Functions\Test\bin\Debug\MathNet.Numerics.pdb
+E:\!skola\!!FEI ING\diplomova praca\GA.Functions\Test\bin\Debug\MathNet.Numerics.xml
+E:\!skola\!!FEI ING\diplomova praca\GA.Functions\Test\obj\x86\Debug\ResolveAssemblyReference.cache
+E:\!skola\!!FEI ING\diplomova praca\GA.Functions\Test\obj\x86\Debug\Test.Form1.resources
+E:\!skola\!!FEI ING\diplomova praca\GA.Functions\Test\obj\x86\Debug\Test.Properties.Resources.resources
+E:\!skola\!!FEI ING\diplomova praca\GA.Functions\Test\obj\x86\Debug\GenerateResource.read.1.tlog
+E:\!skola\!!FEI ING\diplomova praca\GA.Functions\Test\obj\x86\Debug\GenerateResource.write.1.tlog

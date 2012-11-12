@@ -4,3 +4,9 @@ C:\Users\jakub\Documents\!skola\!!FEI ING\diplomova praca\GA.Functions\GA.Functi
 C:\Users\jakub\Documents\!skola\!!FEI ING\diplomova praca\GA.Functions\GA.Functions\bin\Debug\MathNet.Numerics.dll
 C:\Users\jakub\Documents\!skola\!!FEI ING\diplomova praca\GA.Functions\GA.Functions\obj\Debug\GA.Functions.dll
 C:\Users\jakub\Documents\!skola\!!FEI ING\diplomova praca\GA.Functions\GA.Functions\obj\Debug\GA.Functions.pdb
+E:\!skola\!!FEI ING\diplomova praca\GA.Functions\GA.Functions\bin\Debug\GA.Functions.dll
+E:\!skola\!!FEI ING\diplomova praca\GA.Functions\GA.Functions\bin\Debug\GA.Functions.pdb
+E:\!skola\!!FEI ING\diplomova praca\GA.Functions\GA.Functions\bin\Debug\MathNet.Numerics.dll
+E:\!skola\!!FEI ING\diplomova praca\GA.Functions\GA.Functions\obj\Debug\ResolveAssemblyReference.cache
+E:\!skola\!!FEI ING\diplomova praca\GA.Functions\GA.Functions\obj\Debug\GA.Functions.dll
+E:\!skola\!!FEI ING\diplomova praca\GA.Functions\GA.Functions\obj\Debug\GA.Functions.pdb

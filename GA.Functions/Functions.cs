@@ -12,6 +12,9 @@ namespace GA
     public class Functions
     {
         Random rand = new Random();
+        //TODO: otestovat ceiling a truncate na - 1
+        //TODO: prvky.add: skontrolovat dlzku
+        #region prva cast
         /// <summary>
 		/// The function creates a new population of strings, which rises after
         ///	1- to 4-point crossover operation of all (couples of) strings of the old
@@ -378,6 +381,7 @@ namespace GA
             return result;
         }
 
+        #endregion
         //TODO: otestovat nove funkcie
         //** nove funkcie **//
 
@@ -499,8 +503,8 @@ namespace GA
                 int ch1 = 0, ch2 = 0;
                 while (ch1 == ch2)
                 {
-                    ch1 = Convert.ToInt32(Math.Ceiling(rand.NextDouble() * lpop));
-                    ch2 = Convert.ToInt32(Math.Ceiling(rand.NextDouble() * lpop));
+                    ch1 = Convert.ToInt32(Math.Ceiling(rand.NextDouble() * (lpop - 1)));
+                    ch2 = Convert.ToInt32(Math.Ceiling(rand.NextDouble() * (lpop - 1)));
                 }
                 NewPop.SetRow(ch1, Hlp.Row(ch2));
                 NewPop.SetRow(ch2, Hlp.Row(ch1));
@@ -543,8 +547,8 @@ namespace GA
 
             for (int i = 0; i < n; i++)
             {
-                int r = Convert.ToInt32(Math.Ceiling(lpop * rand.NextDouble()));
-                int s = Convert.ToInt32(Math.Ceiling(lstring * rand.NextDouble()));
+                int r = Convert.ToInt32(Math.Ceiling((lpop-1) * rand.NextDouble()));
+                int s = Convert.ToInt32(Math.Ceiling((lstring - 1) * rand.NextDouble()));
                 double d = Amps[1, s] - Amps[0, s];
                 NewPop[r, s] = OldPop[r, s] * (rand.NextDouble() * d + Amps[0, s]);
                 if (NewPop[r, s] < Space[0, s]) NewPop[r, s] = Space[0, s];
@@ -597,10 +601,10 @@ namespace GA
                         i += 1;
                     }
                     flag[i] = 1;
-                    j = Convert.ToInt32(Math.Ceiling(lpop * rand.NextDouble()));
+                    j = Convert.ToInt32(Math.Ceiling((lpop -1)* rand.NextDouble()));
                     while (flag[j] != 0)
                     {
-                        j = Convert.ToInt32(Math.Ceiling(lpop * rand.NextDouble()));
+                        j = Convert.ToInt32(Math.Ceiling((lpop - 1) * rand.NextDouble()));
                     }
                     flag[j] = 2;
                 }
@@ -644,16 +648,16 @@ namespace GA
             if (rate < 0) rate = 0;
             if (rate > 1) rate = 1;
 
-            int n = Convert.ToInt32(Math.Ceiling(lpop * lstring * rate * rand.NextDouble()));
+            int n = Convert.ToInt32(Math.Ceiling((lpop - 1) * lstring * rate * rand.NextDouble()));
 
             matica newpop = OldPop;
 
             for (int i = 0; i < n; i++)
             {
-                int r = Convert.ToInt32(Math.Ceiling(rand.NextDouble() * lpop));
-                int s1 = Convert.ToInt32(Math.Ceiling(rand.NextDouble() * lstring));
-                int s2 = Convert.ToInt32(Math.Ceiling(rand.NextDouble() * lstring));
-                if (s1 == s2) s2 = Convert.ToInt32(Math.Ceiling(rand.NextDouble() * lstring));
+                int r = Convert.ToInt32(Math.Ceiling(rand.NextDouble() * (lpop - 1)));
+                int s1 = Convert.ToInt32(Math.Ceiling(rand.NextDouble() * (lstring - 1)));
+                int s2 = Convert.ToInt32(Math.Ceiling(rand.NextDouble() * (lstring - 1)));
+                if (s1 == s2) s2 = Convert.ToInt32(Math.Ceiling(rand.NextDouble() * (lstring - 1)));
 
                 double str = newpop[r, s1];
                 newpop[r, s1] = newpop[r, s2];
@@ -683,12 +687,12 @@ namespace GA
 
             for (int i = 0; i < n; i++)
             {
-                int r = Convert.ToInt32(Math.Ceiling(lpop * rand.NextDouble()));
-                int s = Convert.ToInt32(Math.Ceiling(lstring * rand.NextDouble()));
+                int r = Convert.ToInt32(Math.Ceiling((lpop - 1) * rand.NextDouble()));
+                int s = Convert.ToInt32(Math.Ceiling((lstring - 1) * rand.NextDouble()));
 
                 List<double[]> prvky = new List<double[]>();
-                prvky.Add(OldPop.Row(r,s-1,lstring-r-1).ToArray());
-                prvky.Add(OldPop.Row(r,0,s-1).ToArray());
+                prvky.Add(OldPop.Row(r,s-1,lstring-s).ToArray());
+                prvky.Add(OldPop.Row(r,0,s).ToArray());
                 NewPop.SetRow(r, spoj(prvky));
             }
 
@@ -710,7 +714,7 @@ namespace GA
 
             matica NewPop = OldPop;
             int[] flag = new int[lpop];
-            int num = Convert.ToInt32(Math.Truncate(lpop / 2.0));
+            int num = Convert.ToInt32(Math.Truncate((lpop - 1) / 2.0));
             int i = 0, j=0;
 
             for (int cyk = 0; cyk < num; cyk++)
@@ -722,9 +726,9 @@ namespace GA
                         i = i + 1;
                     }
                     flag[i] = 1;
-                     j = Convert.ToInt32(Math.Ceiling(lpop * rand.NextDouble()));
+                    j = Convert.ToInt32(Math.Ceiling((lpop - 1) * rand.NextDouble()));
                     while(flag[j]!=0)
-                        j = Convert.ToInt32(Math.Ceiling(lpop * rand.NextDouble()));
+                        j = Convert.ToInt32(Math.Ceiling((lpop - 1) * rand.NextDouble()));
                     flag[j] = 2;
                 }
                 else if (sel == 1)
@@ -732,8 +736,8 @@ namespace GA
                     i = 2 * cyk - 1;
                     j = i + 1;
                 }
-                int p1 = Convert.ToInt32(Math.Ceiling(0.0001 + rand.NextDouble() * (lstring - 2)));
-                int p2 = Convert.ToInt32(Math.Ceiling(0.0001 + rand.NextDouble() * (lstring - p1)) + p1);
+                int p1 = Convert.ToInt32(Math.Ceiling(0.0001 + rand.NextDouble() * (lstring - 3))); //TODO: lstring - 3?
+                int p2 = Convert.ToInt32(Math.Ceiling(0.0001 + rand.NextDouble() * (lstring -1 - p1)) + p1);   //TODO: lstring-1?
                 if (p2 > lstring) p2 = lstring;
                 if ((p1 == 1) && (p2 >= (lstring - 1))) p2 = lstring - 2;
                 if ((p1 == 2) && (p2 >= lstring)) p2 = lstring - 1;
@@ -751,7 +755,8 @@ namespace GA
 
                 int nxch = lstring - (p2 - p1 + 1);
 
-                int pos = 1, all = 0;
+                //TODO: skontrolovat
+                int pos = 0, all = 0;
                 while (all == 0)
                 {
                     for (int k2 = 0; k2 < lstring; k2++)
@@ -772,7 +777,7 @@ namespace GA
                     }
                 }
 
-                pos = 1; all = 0;
+                pos = 0; all = 0;
                 while (all == 0)
                 {
                     for (int k2 = 0; k2 < lstring; k2++)
