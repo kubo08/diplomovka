@@ -56,8 +56,8 @@ namespace Test
                 FitPop = schwefel.schwefelFunc(Pop);
                 FitTrend.Add(FitPop.Min());
                 Best = Ga.selBest(Pop, FitPop, selbest);
-                Old1 = Ga.selRand(Pop, FitPop, 7);
-                Old2 = Ga.genrPop(7, SpaceAll);
+                Old1 = Ga.selRand(Pop, FitPop, Convert.ToInt32(txtSelrand.Text));
+                Old2 = Ga.genrPop(Convert.ToInt32(txtNewPop.Text), SpaceAll);
                 Work = Ga.selwRul(Pop, FitPop, 14).Pop;
                 //Work = Ga.selSort(Pop, FitPop, 14).Pop;
                 //Work = Ga.shake(Work, 0.3);
@@ -66,10 +66,10 @@ namespace Test
                 //Work = Ga.swapgen(Work, 0.25);
                 //Work = Ga.swapPart(Work, 0.35);
                 //Work = Ga.crosord(Work, 0);
-                Work = Ga.selTourn(Pop, FitPop, 14).Pop;
+                Work = Ga.selTourn(Pop, FitPop, Convert.ToInt32(txtSeltourn.Text)).Pop;
                 Work = Ga.crossov(Work, 3, 0);
-                Work = Ga.mutx(Work, 0.25, SpaceAll);
-                Work = Ga.muta(Work, 0.2, SpaceMut, SpaceAll);
+                Work = Ga.mutx(Work, Convert.ToDouble(txtMutx.Text.Replace('.',',')), SpaceAll);
+                Work = Ga.muta(Work, Convert.ToDouble(txtMuta.Text.Replace('.', ',')), SpaceMut, SpaceAll);
                 Pop.SetSubMatrix(0, Best.Pop.RowCount, 0, Pop.ColumnCount, Best.Pop);
                 Pop.SetSubMatrix(Best.Pop.RowCount, Work.RowCount, 0, Pop.ColumnCount, Work);
                 Pop.SetSubMatrix(Best.Pop.RowCount + Work.RowCount, Old1.Pop.RowCount, 0, Pop.ColumnCount, Old1.Pop);
